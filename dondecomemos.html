@@ -1,0 +1,30 @@
+<head>
+  <title>dondecomemos</title>
+</head>
+
+<body>
+  <div id="outer">
+    {{> menu}}
+  </div>
+</body>
+
+<template name="menu">
+  <h1>Donde Comemos?!</h1>
+  <ul>
+  {{#each places}}
+    {{> place}}
+  {{/each}}
+  </ul>
+  <input type="button" value="Click" />
+
+  <br />
+  {{> votes}}
+</template>
+
+<template name="place">
+  <li>{{name}} ({{votes}} votos)</li>
+</template>
+
+<template name="votes">
+  <p>Total votes: {{total}}</p>
+</template>
