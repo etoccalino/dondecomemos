@@ -46,18 +46,18 @@ if (Meteor.isClient) {
 
   Meteor.startup(function () {
     // Create the pie canvas.
-    Pie = new Pie({ canvasSelector: '#results-pie'});
+    Bars = new Bars({ canvasSelector: '#results-pie' });
 
     // Auto-redraw the canvas when votes change.
     Deps.autorun( function() {
-      if (Pie) {
+      if (Bars) {
         var places = _.map(Places.find({}).fetch(), function (place) {
           return {
             name: place.name,
             votes: Votes.find({ when: helpers.today(), place: place._id }).count()
           }
         });
-        Pie.draw(places);
+        Bars.draw(places);
       }
     });
   });

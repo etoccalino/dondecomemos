@@ -7,8 +7,6 @@
     {{> menu}}
   </div>
   <br />
-  <br />
-  <br />
   {{> results}}
 </body>
 
@@ -34,4 +32,19 @@
 
 <template name="results">
   <div id="results-pie"></div>
+
+  <style>
+    <!-- .bars { -->
+    <!--   font: 10px sans-serif; -->
+    <!--   background-color: steelblue; -->
+    <!--   text-align: right; -->
+    <!--   padding: 3px; -->
+    <!--   margin: 1px; -->
+    <!--   color: white; -->
+    <!-- } -->
+    .bars rect {
+      stroke: white;
+      fill: steelblue;
+    }
+  </style>
 </template>
