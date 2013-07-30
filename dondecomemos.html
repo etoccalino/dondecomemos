@@ -1,11 +1,15 @@
 <head>
-  <title>dondecomemos</title>
+  <title>Donde Comemos?!</title>
 </head>
 
 <body>
   <div id="outer">
     {{> menu}}
   </div>
+  <br />
+  <br />
+  <br />
+  {{> results}}
 </body>
 
 <template name="menu">
@@ -16,7 +20,6 @@
   {{/each}}
   </ul>
   <input id="flush" type="button" value="Flush it..." />
-
   <br />
   {{> votes}}
 </template>
@@ -27,4 +30,8 @@
 
 <template name="votes">
   <p>Total votes: {{total}}</p>
+</template>
+
+<template name="results">
+  <div id="results-pie"></div>
 </template>

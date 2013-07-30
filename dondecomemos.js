@@ -1,4 +1,5 @@
 Places = new Meteor.Collection("places");
+
 Places.FIXTURE = [{
   name: "siga la vaca"
 }, {
@@ -12,6 +13,8 @@ Places.FIXTURE = [{
 }];
 
 Votes = new Meteor.Collection("votes");
+
+Pie = null;
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -40,6 +43,20 @@ if (Meteor.isClient) {
       Votes.insert({ place: this._id, when: helpers.today() });
     }
   });
+
+  Meteor.startup(function () {
+    // Create the pie canvas.
+    Pie = new Pie({ canvasSelector: '#results-pie'});
+
+    // Auto-redraw the canvas when votes change.
+    Deps.autorun( function() {
+      var votes = Votes.find({ when: helpers.today() }).fetch();
+      if (Pie) {
+        Pie.draw(votes);
+      }
+    });
+  });
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -62,9 +79,10 @@ if (Meteor.isServer) {
 
 ///////////////////////////////////////////////////////////////////////////////
 
+// Remote procedures for clients to call.
 Meteor.methods({
   'flush': function () {
-    Votes.remove({});
+    Votes.remove({ when: helpers.today() });
   }
 });
 
