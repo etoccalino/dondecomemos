@@ -31,7 +31,7 @@ if (Meteor.isClient) {
 
   Template.menu.events({
     'click input#flush': function () {
-      Votes.find({}).forEach(function (vote) { Votes.remove({ _id: vote._id }) });
+      Meteor.call('flush');
     }
   });
 
@@ -61,6 +61,12 @@ if (Meteor.isServer) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+
+Meteor.methods({
+  'flush': function () {
+    Votes.remove({});
+  }
+});
 
 var helpers = {
   today: function () {
