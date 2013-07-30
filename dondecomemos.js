@@ -50,9 +50,14 @@ if (Meteor.isClient) {
 
     // Auto-redraw the canvas when votes change.
     Deps.autorun( function() {
-      var votes = Votes.find({ when: helpers.today() }).fetch();
       if (Pie) {
-        Pie.draw(votes);
+        var places = _.map(Places.find({}).fetch(), function (place) {
+          return {
+            name: place.name,
+            votes: Votes.find({ when: helpers.today(), place: place._id }).count()
+          }
+        });
+        Pie.draw(places);
       }
     });
   });
