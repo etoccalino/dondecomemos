@@ -16,24 +16,30 @@ Votes = new Meteor.Collection("votes");
 ///////////////////////////////////////////////////////////////////////////////
 
 if (Meteor.isClient) {
+
   Template.menu.places = function () {
     return Places.find({});
   };
 
-  Template.place.events({
-    'click': function () {
-      console.log('clicky! (' + this._id + ')');
-      Votes.insert({ place: this._id });
-    }
-  });
-
   Template.place.votes = function () {
-    return Votes.find({ place: this._id}).count();
+    return Votes.find({ place: this._id, when: helpers.today() }).count();
   };
 
   Template.votes.total = function () {
     return Votes.find({}).count();
   };
+
+  Template.menu.events({
+    'click input#flush': function () {
+      Votes.find({}).forEach(function (vote) { Votes.remove({ _id: vote._id }) });
+    }
+  });
+
+  Template.place.events({
+    'click': function () {
+      Votes.insert({ place: this._id, when: helpers.today() });
+    }
+  });
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -52,4 +58,16 @@ if (Meteor.isServer) {
       Votes.remove({});
     }
   });
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+var helpers = {
+  today: function () {
+    var now = new Date()
+      , y = now.getFullYear()
+      , m = now.getMonth()
+      , d = now.getDate();
+    return new Date(y, m, d);
+  }
 }
