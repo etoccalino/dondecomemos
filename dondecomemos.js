@@ -81,7 +81,7 @@ if (Meteor.isServer) {
         Places.insert(Places.FIXTURE[i]);
     }
     // Wipe out previous votes.
-    if (Places.find().count() !== 0) {
+    if (Votes.find().count() !== 0) {
       Votes.remove({});
     }
   });
