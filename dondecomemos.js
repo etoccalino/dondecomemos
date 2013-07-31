@@ -36,7 +36,11 @@ if (Meteor.isClient) {
 
   Template.menu.events({
     'click input#flush': function () {
-      Meteor.call('flush');
+      Votes.find({ when: helpers.today() }).forEach(function (vote) {
+        // This silly implementation is a workaround non-dying votes in the
+        // deployment server.
+        Votes.remove({ _id: vote._id });
+      });
     }
   });
 
@@ -63,21 +67,12 @@ if (Meteor.isClient) {
       }
     });
   });
-
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
-
-    // Remote procedures for clients to call.
-    Meteor.methods({
-      'flush': function () {
-        Votes.remove({ when: helpers.today() });
-        return true;
-      }
-    });
 
     // Populate the places in the database.
     if (Places.find().count() === 0) {
