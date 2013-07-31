@@ -1,8 +1,17 @@
-/* CSS declarations go here */
 body {
     font: 15px sans-serif;
 }
 
 .arc path {
     stroke: #fff;
+}
+
+/* Push the results graph to the top right corner. */
+#outer {
+    position: relative;
+}
+#results-pie {
+    position: absolute;
+    top: 0px;
+    right: 0px;
 }
