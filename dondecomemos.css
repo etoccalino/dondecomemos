@@ -1,1 +1,8 @@
 /* CSS declarations go here */
+body {
+    font: 15px sans-serif;
+}
+
+.arc path {
+    stroke: #fff;
+}

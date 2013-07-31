@@ -26,7 +26,6 @@ Bars = function (attrs) {
   self.draw = function(data) {
     self.clear();
 
-    var numPlaces = 5;
     var x = d3.scale.linear()
               .domain([0, _.max(_.pluck(data, 'votes'))])
               .range([0, self.width])
@@ -34,7 +33,7 @@ Bars = function (attrs) {
     self.svg = d3.select(self.canvasSelector).append('svg')
       .attr('class', 'bars')
       .attr('width', self.width)
-      .attr('height', self.height * numPlaces);
+      .attr('height', self.height * data.lenght);
 
     self.svg.selectAll("rect")
         .data(data)
