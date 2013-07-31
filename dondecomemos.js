@@ -28,6 +28,10 @@ if (Meteor.isClient) {
     return Votes.find({ place: this._id, when: helpers.today() }).count();
   };
 
+  Template.votes.today = function () {
+    return helpers.today().toDateString();
+  };
+
   Template.votes.total = function () {
     return Votes.find({}).count();
   };

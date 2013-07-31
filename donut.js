@@ -5,7 +5,7 @@ Pie = function (attrs) {
   if (! attrs.canvasSelector) throw new Error("Need to pass a canvas element selector");
   self.canvasSelector = attrs.canvasSelector;
   self.height = attrs.height || 500;
-  self.width = attrs.width || 900;
+  self.width = attrs.width || 500;
   self.radius = attrs.radius || Math.min(self.width, self.height) / 2;
 
   var create = function () {
