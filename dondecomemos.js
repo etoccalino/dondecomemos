@@ -14,8 +14,6 @@ Places.FIXTURE = [{
 
 Votes = new Meteor.Collection("votes");
 
-Pie = null;
-
 ///////////////////////////////////////////////////////////////////////////////
 
 if (Meteor.isClient) {
@@ -51,7 +49,6 @@ if (Meteor.isClient) {
   Meteor.startup(function () {
     // Create the pie canvas.
     pie = new Pie({ canvasSelector: '#results-pie' });
-    PIE = pie;
 
     // Auto-redraw the canvas when votes change.
     Deps.autorun( function() {
@@ -74,6 +71,14 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.startup(function () {
 
+    // Remote procedures for clients to call.
+    Meteor.methods({
+      'flush': function () {
+        Votes.remove({ when: helpers.today() });
+        return true;
+      }
+    });
+
     // Populate the places in the database.
     if (Places.find().count() === 0) {
       var len = Places.FIXTURE.length;
@@ -88,13 +93,6 @@ if (Meteor.isServer) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-
-// Remote procedures for clients to call.
-Meteor.methods({
-  'flush': function () {
-    Votes.remove({ when: helpers.today() });
-  }
-});
 
 var helpers = {
   today: function () {
